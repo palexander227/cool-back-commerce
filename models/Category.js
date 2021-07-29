@@ -29,6 +29,6 @@ Category.init(
   }
 );
 
-// Category.hasMany(Product, {foreignKey: 'category_id'})
+// Category.hasMany(Product)
 
 module.exports = Category;
