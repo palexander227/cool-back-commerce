@@ -39,18 +39,30 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', (req, res) => {
   // update a category by its `id` value
-  const category = await Category.findOne({
+    Category.findOne({
     where: {
       id: req.params.id
     },
-    include: [{
-      model: Product
-    }]
- });
+ }).then(category => {
+   if(category){
+     category.update({
+       category_name: req.body.category_name
+      }).then(category => res.json(category))
+    } else {res.json('no category with that id found')}
+    })
 });
 
 router.delete('/:id', (req, res) => {
   // delete a category by its `id` value
+  Category.findOne({
+    where: {
+      id: req.params.id
+    },
+ }).then(category => {
+   if(category){
+     category.destroy().then(() => res.json('category is gone'))
+    } else {res.json('no category with that id found')}
+    })
 });
 
 module.exports = router;
